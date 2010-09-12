@@ -1,0 +1,9 @@
+\#*
+\.#*
+log/*
+config/s3.yml
+.autotest
+vendor/bundler_gems
+.bundle/*
+db/development.sqlite3
+
