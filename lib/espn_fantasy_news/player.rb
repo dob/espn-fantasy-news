@@ -3,10 +3,14 @@ module ESPNFantasyNews
     attr_reader :name, :espn_player_id, :position, :team
 
     def initialize(name, player_id, position, team)
-      self.name = name
-      self.espn_player_id = player_id
-      self.position = position
-      self.team = team
+      @name = name
+      @espn_player_id = player_id
+      @position = position
+      @team = team
+    end
+
+    def to_s
+      "#{self.name} - #{self.position} #{self.team}, id #{self.espn_player_id.to_s}"
     end
     
   end
