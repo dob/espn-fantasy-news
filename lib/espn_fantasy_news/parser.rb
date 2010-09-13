@@ -3,6 +3,17 @@ require 'open-uri'
 module ESPNFantasyNews
 
   class Parser
+
+    def self.load_all_players
+      offset = 0
+      res = []
+      while offset <= 1080 do
+        url = ESPNFantasyNews::PLAYER_LIST_ENDPOINT + "?startindex=#{offset.to_s}"
+        res += self.players_from_url(url)
+        offset += 40
+      end
+      res
+    end
     
     def self.players_from_url(url)
       doc = Nokogiri::HTML(open(url))

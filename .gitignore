@@ -6,4 +6,4 @@ config/s3.yml
 vendor/bundler_gems
 .bundle/*
 db/development.sqlite3
-
+/pkg

@@ -14,4 +14,9 @@ class ParserTest < Test::Unit::TestCase
     assert news != nil && news != []
   end
 
+  def test_load_all_players
+    players = ESPNFantasyNews::Parser.load_all_players
+    assert players != [] && players != nil
+  end
+
 end
