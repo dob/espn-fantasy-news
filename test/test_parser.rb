@@ -17,6 +17,7 @@ class ParserTest < Test::Unit::TestCase
   def test_load_all_players
     players = ESPNFantasyNews::Parser.load_all_players
     assert players != [] && players != nil
+    assert_equal players.length, 1087
   end
 
 end

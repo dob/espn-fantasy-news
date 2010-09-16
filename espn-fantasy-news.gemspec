@@ -5,7 +5,7 @@
 
 Gem::Specification.new do |s|
   s.name = %q{espn-fantasy-news}
-  s.version = "0.1.0"
+  s.version = "0.1.1"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Doug Petkanics"]
@@ -18,7 +18,9 @@ Gem::Specification.new do |s|
   s.files = [
     ".gitignore",
      "README",
+     "Rakefile",
      "VERSION",
+     "espn-fantasy-news.gemspec",
      "lib/espn_fantasy_news.rb",
      "lib/espn_fantasy_news/news.rb",
      "lib/espn_fantasy_news/parser.rb",

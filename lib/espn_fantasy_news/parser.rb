@@ -8,7 +8,7 @@ module ESPNFantasyNews
       offset = 0
       res = []
       while offset <= 1080 do
-        url = ESPNFantasyNews::PLAYER_LIST_ENDPOINT + "?startindex=#{offset.to_s}"
+        url = ESPNFantasyNews::PLAYER_LIST_ENDPOINT + "?startIndex=#{offset.to_s}"
         res += self.players_from_url(url)
         offset += 40
       end
@@ -24,12 +24,18 @@ module ESPNFantasyNews
         team, pos = self.split_string_on_char_194(teampos.strip)
         player_id = cell.css('a')[0].get_attribute('playerid').to_i
 
+        pos = self.parse_pos(pos)          
+
         # Remove the asterisk from players who are on the IR
         name = name[0, name.length - 1] if name[-1, 1] == "*"
 
         ESPNFantasyNews::Player.new(name, player_id, pos, team)
       end
       player_attributes
+    end
+
+    def self.load_all_news
+      self.news_from_url(ESPNFantasyNews::NEWS_ENDPOINT)
     end
 
     def self.news_from_url(url)
@@ -54,6 +60,22 @@ module ESPNFantasyNews
       elsif str[3].to_i == 194
         return str[0,3], str[5, str.length - 4]
       end
+    end
+
+    def self.parse_pos(pos)
+      self.positions[pos[0,1]]
+    end
+
+    # Garbage characters get included if there's an injury, so just use the first letter
+    def self.positions
+      {
+        "Q" => "QB",
+        "R" => "RB",
+        "W" => "WR",
+        "T" => "TE",
+        "K" => "K",
+        "D" => "D/ST"
+      }
     end
 
   end
