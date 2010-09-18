@@ -13,4 +13,5 @@ directory = File.expand_path(File.dirname(__FILE__))
 
 require File.join(directory, 'espn_fantasy_news', 'player')
 require File.join(directory, 'espn_fantasy_news', 'news')
+require File.join(directory, 'espn_fantasy_news', 'team')
 require File.join(directory, 'espn_fantasy_news', 'parser')

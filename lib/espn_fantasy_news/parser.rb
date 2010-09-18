@@ -64,7 +64,8 @@ module ESPNFantasyNews
           ids << player_id
         end
       end
-      ids
+      name = self.parse_team_name(doc.css('title').text)
+      Team.new(name, ids)
     end
 
     private
@@ -95,7 +96,16 @@ module ESPNFantasyNews
         "D" => "D/ST"
       }
     end
-
+    
+    def self.parse_team_name(long_name)
+      dash_pos = long_name =~ /-/
+      if dash_pos
+        long_name[0, dash_pos - 1]
+      else
+        long_name
+      end
+    end
+    
   end
 
 end
