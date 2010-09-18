@@ -4,6 +4,7 @@ module ESPNFantasyNews
 
   class Parser
 
+    # Load the entire universe of ESPN players
     def self.load_all_players
       offset = 0
       res = []
@@ -15,6 +16,7 @@ module ESPNFantasyNews
       res
     end
     
+    # Load all the players at the url
     def self.players_from_url(url)
       doc = Nokogiri::HTML(open(url))
       player_attributes = doc.css('.pncPlayerRow').collect do |x|
@@ -34,10 +36,12 @@ module ESPNFantasyNews
       player_attributes
     end
 
+    # Return all the latest news stories
     def self.load_all_news
       self.news_from_url(ESPNFantasyNews::NEWS_ENDPOINT)
     end
 
+    # Return all the news stories from the given url
     def self.news_from_url(url)
       doc = Nokogiri::HTML(open(url))
       news_attributes = doc.css('tr.tableBody').collect do |player_row|
@@ -47,6 +51,20 @@ module ESPNFantasyNews
         ESPNFantasyNews::News.new(player_id, text)
       end
       news_attributes
+    end
+
+    # Return an array of espn player ids for the players on the team at URL
+    def self.load_team_player_ids(url)
+      ids = []
+      doc = Nokogiri::HTML(open(url))
+      player_row = doc.css('.pncPlayerRow').each do |row|
+        link = row.css('a')[0]
+        if link
+          player_id = link.get_attribute('playerid').to_i
+          ids << player_id
+        end
+      end
+      ids
     end
 
     private
