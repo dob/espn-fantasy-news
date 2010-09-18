@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{espn-fantasy-news}
-  s.version = "0.1.2"
+  s.version = "0.2.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Doug Petkanics"]
-  s.date = %q{2010-09-17}
+  s.date = %q{2010-09-18}
   s.description = %q{ESPN fantasy football has a list of players in their Universe, and it provides news updates on said players. This is a utility library used to scrape the data for use in other applications}
   s.email = %q{petkanics@gmail.com}
   s.extra_rdoc_files = [
@@ -25,6 +25,7 @@ Gem::Specification.new do |s|
      "lib/espn_fantasy_news/news.rb",
      "lib/espn_fantasy_news/parser.rb",
      "lib/espn_fantasy_news/player.rb",
+     "lib/espn_fantasy_news/team.rb",
      "test/suite.rb",
      "test/test_parser.rb"
   ]
