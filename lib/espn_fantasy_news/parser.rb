@@ -20,7 +20,7 @@ module ESPNFantasyNews
     def self.players_from_url(url)
       doc = Nokogiri::HTML(open(url))
       player_attributes = doc.css('.pncPlayerRow').collect do |x|
-        cell = x.css('td')[1]
+        cell = x.css('td')[0]
         cell_text = cell.text
         name, teampos = cell_text.split(',')
         team, pos = self.split_string_on_char_194(teampos.strip)
