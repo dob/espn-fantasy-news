@@ -1,4 +1,5 @@
 require 'open-uri'
+require 'ruby-debug'
 
 module ESPNFantasyNews
 
@@ -20,20 +21,22 @@ module ESPNFantasyNews
     def self.players_from_url(url)
       doc = Nokogiri::HTML(open(url))
       player_attributes = doc.css('.pncPlayerRow').collect do |x|
-        cell = x.css('td')[0]
+        cell = x.css('td')[1]
         cell_text = cell.text
-        name, teampos = cell_text.split(',')
-        team, pos = self.split_string_on_char_194(teampos.strip)
-        player_id = cell.css('a')[0].get_attribute('playerid').to_i
-
-        pos = self.parse_pos(pos)          
-
-        # Remove the asterisk from players who are on the IR
-        name = name[0, name.length - 1] if name[-1, 1] == "*"
-
-        ESPNFantasyNews::Player.new(name, player_id, pos, team)
+        unless cell_text.include?("D/ST")
+          name, teampos = cell_text.split(',')
+          team, pos = self.split_string_on_char_194(teampos.strip)
+          player_id = cell.css('a')[0].get_attribute('playerid').to_i
+          
+          pos = self.parse_pos(pos)          
+          
+          # Remove the asterisk from players who are on the IR
+          name = name[0, name.length - 1] if name[-1, 1] == "*"
+          
+          ESPNFantasyNews::Player.new(name, player_id, pos, team)
+        end
       end
-      player_attributes
+      player_attributes.compact
     end
 
     # Return all the latest news stories
@@ -72,7 +75,7 @@ module ESPNFantasyNews
 
     # It isn't a space that seperates the team and position, it's ascii char 194 for some reason?
     def self.split_string_on_char_194(str)
-      return str if (str.nil? || str.length < 4)
+      return if (str.nil? || str.length < 4)
 
       if str[2].to_i == 194
         return str[0,2], str[4, str.length - 4]
